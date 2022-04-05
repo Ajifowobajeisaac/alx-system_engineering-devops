@@ -1,0 +1,2 @@
+#!/bin/bash
+car ./iacta | tail --lines=1 >> iacta
