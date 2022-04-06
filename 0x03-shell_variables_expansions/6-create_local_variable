@@ -1,4 +1,1 @@
-#!/bin/bash
-local BEST="School"
-func() {local BEST="School"}
-func() {local BEST="School"}
+func() {local BEST="School}"
