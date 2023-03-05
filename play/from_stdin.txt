@@ -1,0 +1,18 @@
+This accepts input from the command line and sends it to the file directly
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+End
