@@ -1,0 +1,17 @@
+delimiter.txt
+dink
+dink-hard
+dink_wrapper_1
+dink_wrapper_2
+egg
+frog.txt
+from_stdin.txt
+just_input.txy
+pipe_sorted.txt
+pipe_tail
+pipe.txt
+pipe_unsorted.txt
+sort
+special_characters.txt
+spy.txt
+to_err
