@@ -2,8 +2,8 @@
 
 import cmd
 
-class Cnsole(cmd.Cmd):
-    prompt = '>'
+class HBNBCommand(cmd.Cmd):
+    prompt = '(hbnb)'
 
     def do_hard_things(self, arg):
         print(f"man was not created for comfort, do hard things")
@@ -15,6 +15,4 @@ class Cnsole(cmd.Cmd):
         pass
 
 if __name__ == '__main__':
-    launch = Cnsole()
-    launch.cmdloop()
-    launch.emptyline()
+    HBNBCommand().cmdloop()
