@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+var='unsused test'
+
+echo $var
