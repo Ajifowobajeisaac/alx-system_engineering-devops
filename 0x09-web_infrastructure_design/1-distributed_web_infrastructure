@@ -1,0 +1,31 @@
+Infrastructure Design:
+Server 1:
+Role: Web Server (Nginx).
+Purpose: To handle HTTP/HTTPS requests from clients and serve static content. Nginx is chosen for its high performance and efficiency in handling concurrent connections.
+Server 2:
+Role: Application Server.
+Purpose: To run the application files (code base) and dynamically generate content. This server processes business logic, interacts with the database, and generates dynamic web pages.
+Server 3:
+Role: Database Server (MySQL).
+Purpose: To store, manage, and retrieve all the data required by the application, like user information, content, and settings.
+Load Balancer (HAproxy):
+Purpose: To distribute incoming traffic between the web server and the application server, enhancing the performance and reliability of the system.
+Distribution Algorithm: Round Robin or Least Connections. Round Robin distributes requests evenly across the servers, while Least Connections directs new requests to the server with the fewest active connections.
+Active-Active vs. Active-Passive Setup: This setup would ideally be Active-Active, where both servers are actively handling traffic. In contrast, an Active-Passive setup has one server handling traffic and the other serving as a backup in case the primary fails.
+Database Primary-Replica Setup:
+Function: The Primary node handles all write operations and some read operations, while the Replica node(s) handle most of the read operations, reducing the load on the Primary.
+Primary vs. Replica Node: The Primary node is where all data changes are made first. The Replica node syncs with the Primary to mirror its data, but typically, it's read-only from an application perspective.
+Specifics and Issues:
+Adding Multiple Servers: Improves scalability and reliability. If one server fails, the others can continue to operate, reducing downtime.
+HAproxy Load Balancer: Provides efficient traffic management and ensures even distribution of load, preventing any single server from becoming a bottleneck.
+Database Cluster: Enhances data availability and read performance. However, it introduces complexity in data synchronization and management.
+Potential Issues:
+Single Points of Failure (SPOF):
+If HAproxy fails, the entire system can become unreachable.
+The database setup might have a SPOF if the Primary node fails and there's no automatic failover to a Replica.
+Security Issues:
+No dedicated firewalls mentioned
+this could expose the servers to various network-level attacks or unauthorized access.
+Absence of HTTPS implementation: Without HTTPS, data transferred between the clients and the server is not encrypted, which is a significant risk, especially for sensitive data.
+Lack of Monitoring:
+Without proper monitoring tools in place, it's challenging to detect and react to issues like performance bottlenecks, server downtime, or security breaches in real-time.
