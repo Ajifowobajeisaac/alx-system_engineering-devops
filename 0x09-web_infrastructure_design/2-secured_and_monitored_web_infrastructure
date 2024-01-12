@@ -1,0 +1,65 @@
+Infrastructure Design with Enhancements:
+Server 1:
+Role: Web Server (Nginx).
+Security: Protected by a Firewall.
+Monitoring: Equipped with a monitoring client.
+Server 2:
+Role: Application Server.
+Security: Protected by a Firewall.
+Monitoring: Equipped with a monitoring client.
+Server 3:
+Role: Database Server (MySQL).
+Security: Protected by a Firewall.
+Monitoring: Equipped with a monitoring client.
+Load Balancer (HAproxy):
+SSL Certificate: Implemented to serve www.foobar.com over HTTPS.
+Monitoring Clients:
+Installed on Each Server: To collect and send data to a monitoring service like Sumo Logic.
+Specifics and Reasons for Additional Elements:
+Firewalls:
+Purpose: To protect each server from unauthorized access and network-based attacks. Each firewall acts as a barrier between the server and potential threats from the internet.
+SSL Certificate for HTTPS:
+Why: To encrypt traffic between the client and the server, ensuring data privacy and security, particularly important for sensitive data like login credentials and personal information.
+Monitoring Clients:
+Role: To continuously collect data about server performance, traffic, and activities. This data is sent to a monitoring service for analysis.
+QPS Monitoring: To monitor Queries Per Second (QPS) on the web server, configure the monitoring client to track and report on HTTP request rates and response times.
+Issues with the Infrastructure:
+SSL Termination at Load Balancer:
+Issue: While it simplifies certificate management, it means traffic between the load balancer and internal servers is unencrypted, potentially exposing data to risks within the internal network.
+Single MySQL Server for Writes:
+Problem: This creates a Single Point of Failure (SPOF) for database writes. If the MySQL server goes down, the entire application's ability to perform write operations is impacted.
+Homogeneous Server Components:
+Concern: Having all servers configured identically (with web, application, and database capabilities) can lead to inefficiencies and increased security risks. Specialized servers are generally more secure and performant.
+Conclusion:
+This enhanced infrastructure for www.foobar.com is designed to be secure, encrypted, and monitored. The inclusion of firewalls and SSL encryption enhances security, while monitoring clients enable proactive management of server health and performance. However, considerations around SSL termination, database write operations, and server specialization should be addressed to optimize the infrastructure's reliability and security.
+Enhanced Infrastructure Diagram for www.foobar.com:
+Here's a visual representation of the proposed infrastructure:
+
+User
+  |
+[Internet]
+  |
+[HAproxy Load Balancer] --- SSL Termination
+  | \
+  |  \
+  |   [Firewall 1]     [Firewall 2]     [Firewall 3]
+  |        |               |                |
+[Server 1: Web Server] [Server 2: Application Server] [Server 3: Database Server]
+  Nginx       |             |                MySQL
+  |       Application     Monitoring    (Write Operations)
+  |          Files         Client       and Data Management
+  |
+ Monitoring             
+   Client      
+             
+Security, Encryption, and Monitoring Details:
+Firewalls: Separate firewalls for each server provide tailored security settings and reduce the risk of network-level attacks.
+SSL Certificate on HAproxy: Encrypts data between the user and the load balancer. Ensures that data transmission to and from the user is secure.
+Monitoring Clients: Installed on each server, these clients collect vital metrics like CPU usage, memory usage, network activity, application performance, and more.
+Addressing the Issues:
+SSL Termination at Load Balancer:
+To mitigate risks, internal traffic encryption (between the load balancer and servers) or a secure internal network can be implemented. This ensures end-to-end encryption of data.
+Single MySQL Server for Writes:
+Implementing a database cluster with failover mechanisms or replication can address this. Using a master-slave configuration, where the master handles writes and slaves handle read operations, can also distribute the load.
+Homogeneous Server Components:
+Specializing servers for their primary roles (web, application, database) enhances performance and security. For instance, the web server focuses on handling HTTP requests, the application server on running the application logic, and the database server on data storage and retrieval.

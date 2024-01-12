@@ -1,0 +1,18 @@
+Enhanced Infrastructure Design:
+New Server:
+Role: Dedicated Database Server.
+Purpose: To isolate the database (MySQL) from other services, enhancing performance and security. This server will solely handle data storage, management, and retrieval operations.
+Existing Servers:
+Server 1: Now dedicated as a Web Server (Nginx).
+Server 2: Now dedicated as an Application Server.
+Each server is now specialized, leading to optimized performance and easier maintenance.
+Load Balancer (HAproxy) Configuration:
+Existing HAproxy: Continues to distribute incoming traffic.
+New HAproxy (as a Cluster): Added for redundancy and high availability. Configured in a cluster with the existing HAproxy, ensuring that if one fails, the other takes over without service disruption.
+Rationale for Additional Elements:
+Dedicated Database Server:
+Why: Separating the database onto its own server prevents resource contention with web and application servers. It enhances security as the database is not exposed directly to the web.
+Split Components:
+Why: This allows each component to be optimized for its specific task. The web server can be tuned for handling HTTP requests efficiently, while the application server can be optimized for running the application logic.
+HAproxy Cluster:
+Why: Provides high availability for the load balancing function. In a cluster setup, if one HAproxy server fails, the other can continue to balance the load without interrupting the service.
