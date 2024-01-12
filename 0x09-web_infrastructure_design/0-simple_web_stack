@@ -1,0 +1,42 @@
+Let's design a simple web infrastructure for **`www.foobar.com`** hosted on a single server with the LAMP stack and detail each component's role, starting with a user trying to access the website:
+
+### **User Access Flow:**
+
+1. **User Requests Website:**
+    - A user enters **`www.foobar.com`** in their browser.
+2. **DNS Lookup:**
+    - The browser performs a DNS lookup for **`www.foobar.com`**. The domain name acts as a human-readable address for the server. The DNS translates this domain into the server's IP address, which is set to 8.8.8.8.
+3. **DNS Record Type:**
+    - The **`www`** in **`www.foobar.com`** is a DNS record, specifically a CNAME (Canonical Name) record, which maps the **`www`** subdomain to the domain **`foobar.com`**.
+4. **Contacting the Server:**
+    - The browser sends a request to the server at IP address 8.8.8.8.
+5. **Web Server (Nginx) Response:**
+    - Nginx, the web server, receives the request. Its role is to handle incoming HTTP/HTTPS requests and either serve static content (like HTML, CSS, images) directly or forward dynamic content requests to the application server.
+6. **Application Server:**
+    - The application server runs the application's code (e.g., PHP scripts in a LAMP stack). It processes the request, performs logic, interacts with the database if needed, and generates the dynamic content to be sent back to the user.
+7. **Database (MySQL):**
+    - If the request requires data retrieval or storage (like user data or content), the application server queries the MySQL database. The database stores and manages all data required by the application.
+8. **Response to User:**
+    - Nginx sends the generated content back to the user's browser, which renders the website.
+
+### **Server and Infrastructure Specifics:**
+
+- **Server:** It's a computer configured to process requests and deliver data over a network. In this case, it hosts Nginx, the application server, the application files, and the MySQL database.
+- **Role of Domain Name:** The domain name **`foobar.com`** provides a user-friendly way to access the server via a web browser. It's translated to an IP address through DNS.
+- **Web Server:** A web server is a specific type of server that hosts websites and delivers web content over the internet or an intranet. It handles HTTP requests from clients (web browsers) and provides HTTP responses, usually in the form of HTML pages, images, and other web content.
+- **Application Server:** An application server is a framework, an environment where applications can run, no matter what they are or what functions they perform. It's more about providing a runtime environment for server-side logic.
+- **Database:** A database is a structured collection of data. In computer networks, databases are managed by a software system known as a Database Management System (DBMS). In our case, MySQL is the DBMS.
+- **Communication Protocol:** The server communicates with the user's computer using the HTTP/HTTPS protocols, managed by Nginx.
+
+### **Issues with This Infrastructure:**
+
+1. **Single Point of Failure (SPOF):**
+    - Everything relies on one server. If it fails, the entire website goes down.
+2. **Downtime During Maintenance:**
+    - Any maintenance (like deploying new code or updating the server) will require downtime, making the website temporarily inaccessible.
+3. **Limited Scalability:**
+    - The server can handle only a limited amount of traffic. If traffic exceeds its capacity, the website will become slow or unresponsive.
+4. **Limited Resources:**
+    - CPU, memory, and storage are confined to what's available on the single server.
+5. **Security Risks:**
+    - Since all components are on one server, a breach could compromise the entire system.
