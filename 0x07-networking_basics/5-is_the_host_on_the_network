@@ -6,7 +6,7 @@ script_name=$(basename "$0")
 
 # Check if an IP address is provided
 if [ -z "$ip_address" ]; then
-    echo "Usage: $script_name <IP_ADDRESS>"
+    echo "Usage: $script_name (IP_ADDRESS)"
     exit 1
 fi
 
