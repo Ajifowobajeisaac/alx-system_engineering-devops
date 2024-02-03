@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Checks availability of network devices
 
-echo "Enter the network device IP or hostname:"
 read -r net_var
 
 ping -c 5 "$net_var"
