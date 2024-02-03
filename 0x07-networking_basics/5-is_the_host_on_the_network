@@ -2,6 +2,6 @@
 # Checks availability of network devices
 
 echo "Enter the network device IP or hostname:"
-read net_var
+read -r net_var
 
-ping -c 5 $net_var
+ping -c 5 "$net_var"
