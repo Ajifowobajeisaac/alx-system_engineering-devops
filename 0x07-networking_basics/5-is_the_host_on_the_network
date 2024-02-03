@@ -2,7 +2,7 @@
 # Checks availability of network devices
 
 ip_address=$1
-script_name=$(basename $0)
+script_name=$(basename "$0")
 
 # Check if an IP address is provided
 if [ -z "$ip_address" ]; then
