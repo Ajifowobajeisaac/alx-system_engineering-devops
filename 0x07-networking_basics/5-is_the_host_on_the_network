@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Checks availability of network devices
 
-read -r net_var
-
-ping -c 5 "$net_var"
+ip_address=$1
+ping -c 5 "$ip_address"
