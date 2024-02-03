@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Shows listening socket and which progams sockets belong to
+netstat -l
+netstat -ltp
