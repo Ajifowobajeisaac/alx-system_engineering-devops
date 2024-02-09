@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Dispays Username, User ID and Home directory from /etc/passwd
 
 # Loop through each line in /etc/passwd
