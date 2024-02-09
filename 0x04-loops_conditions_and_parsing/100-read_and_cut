@@ -5,5 +5,5 @@
 # Loop through each line in /etc/passwd
 while IFS=: read -r username _ userid _ _ homedir _; do
     # Display the username, user id, and home directory
-    echo "Username: $username, User ID: $userid, Home Directory: $homedir"
+    echo "$username:$userid:$homedir"
 done < /etc/passwd
