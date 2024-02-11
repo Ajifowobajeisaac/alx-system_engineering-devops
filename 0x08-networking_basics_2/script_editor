@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Replaces a line in another script
+
+sed -i s/"number 2"/successful/ test1
+echo "final line" >> test1
