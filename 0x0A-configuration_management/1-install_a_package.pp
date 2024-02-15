@@ -4,16 +4,16 @@
 
 # Install Python 3
 package { 'python3':
-  ensure => 'installed',
+  ensure => installed,
 }
 
 package { 'python3-pip':
-  ensure  =>  'installed',
-  require =>  'Package[python3]',
+  ensure  =>  installed,
+  require =>  Package['python3'],
 }
 
 package { 'flask':
   ensure   =>  '2.1.0',
-  require  =>  'Package[python3-pip]',
+  require  =>  Package['python3-pip'],
   provider =>  'pip3',
 }
