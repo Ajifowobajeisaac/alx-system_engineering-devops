@@ -7,5 +7,5 @@ file {'config':
   ensure  => 'file',
   path    => '/etc/ssh/ssh_config',
   mode    => '0600',
-  content => 'IdentityFile ~/.ssh/school\nPasswordAuthentication no',
+  content => "IdentityFile ~/.ssh/school\nPasswordAuthentication no",  
 }
