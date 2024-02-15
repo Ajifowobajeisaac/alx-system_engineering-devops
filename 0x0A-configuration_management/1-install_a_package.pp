@@ -3,6 +3,7 @@
 # Flask - 2.1.0
 
 package { 'flask':
-  ensure   =>  'installed',
+  ensure   =>  installed,
+  name     =>  'fask'
   provider =>  'pip3',
 }
