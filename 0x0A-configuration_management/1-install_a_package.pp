@@ -7,13 +7,13 @@ package { 'python3':
   ensure => installed,
 }
 
-exec { 'install_pip3':
-  command =>  'apt-get install python3-pip',
-  require =>  'Package[python3]'
+package { 'python3-pip':
+  ensure  =>  'intalled',
+  require =>  'Package[python3]',
 }
 
 package { 'flask':
   ensure   =>  '2.1.0',
-  require  =>  'exec[install_pip3]',
+  require  =>  'Package[python3-pip]',
   provider =>  'pip3',
 }
