@@ -1,0 +1,14 @@
+#!/bin/bash
+while [[ true ]]
+do
+	echo -e "\n\nlet"
+    sleep 2
+	echo "me"
+	sleep 3
+	echo "tell"
+	sleep 2
+	echo "you"
+	sleep 2
+	echo -e "a story\n\n"
+	echo "------------------------------------------------------------"
+done
