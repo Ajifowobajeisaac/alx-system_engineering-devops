@@ -4,11 +4,11 @@
 
 # Install Python 3
 package { 'python3':
-  ensure => installed,
+  ensure => 'installed',
 }
 
 package { 'python3-pip':
-  ensure  =>  'intalled',
+  ensure  =>  'installed',
   require =>  'Package[python3]',
 }
 
