@@ -14,8 +14,9 @@ package { 'python3-pip':
 
 
 exec { 'install_werkzeug':
-  command =>  'pip3 install Werkzeug==2.1.1',
-  unless  =>  'pip3 freeze | grep Werkzeug==2.1.1',
+  command =>  '/usr/bin/pip3 install Werkzeug==2.1.1',
+  unless  =>  '/usr/bin/pip3 freeze | grep Werkzeug==2.1.1',
+  path    => ['/usr/bin', '/bin'],
   require =>   Package['python3-pip'],
 }
 
