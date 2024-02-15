@@ -2,8 +2,14 @@
 # Requirements
 # Flask - 2.1.0
 
+# Install Python 3
+package { 'python3':
+  ensure => installed,
+}
+
 exec { 'install_pip3':
   command =>  'apt-get install python3-pip',
+  require =>  'Package[python3]'
 }
 
 package { 'flask':
