@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Installs and configures a Nginx
+# Ngninx x should listen on port 80
+# Quering root with GET request (curl) should return  a string "Hello World"
