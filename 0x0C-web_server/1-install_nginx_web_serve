@@ -2,3 +2,47 @@
 # Installs and configures a Nginx
 # Ngninx x should listen on port 80
 # Quering root with GET request (curl) should return  a string "Hello World"
+
+# install Nginx
+apt-get update
+apt-get intsall nginx
+
+# allow firewall access
+ufw allow 'HTTP'
+
+# Create document root directory
+mkdir -p /var/www/chefzeek.tech/html/
+
+# Give user permissions
+chown -R $USER:$USER /var/www/chefzeek.tech/html/
+
+# create site page to include string "Hello World"
+echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
+
+
+# create server block
+cat <<EOF >/etc/nginx/sites-available/server_block
+    server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/chefzeek.tech/html;
+        index index.html;
+
+        servername chefzeek.tech www.chefzeek.tech;
+
+        location / {
+            try_files $uri $uri/ \=404;
+        }
+    }
+EOF
+
+# enable server_block by linking with sites-enabled
+ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
+
+
+# open nginx configuration file && uncoment HashBucket line 
+sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf 
+
+# confirm nginx files syntax
+nginx -t
