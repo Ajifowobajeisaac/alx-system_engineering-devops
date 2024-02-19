@@ -21,15 +21,15 @@ echo "Hello World!" > /var/www/chefzeek.tech/html/index.html
 
 
 # create server block
-cat <<EOF >/etc/nginx/sites-available/server_block
+cat <<EOF >/etc/nginx/sites-available/chefzeel.tech
     server {
-        listen 80;
-        listen [::]:80;
+        listen 80 default_server;
+        listen [::]:80 default_server;
 
         root /var/www/chefzeek.tech/html;
         index index.html;
 
-        server_name chefzeek.tech www.chefzeek.tech;
+        server_name _;
 
         location / {
             try_files $uri $uri/ \=404;
@@ -46,3 +46,5 @@ sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf
 
 # confirm nginx files syntax
 nginx -t
+
+nginx -s reload
