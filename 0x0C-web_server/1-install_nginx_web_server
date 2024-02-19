@@ -17,7 +17,7 @@ mkdir -p /var/www/chefzeek.tech/html/
 chown -R $USER:$USER /var/www/chefzeek.tech/html/
 
 # create site page to include string "Hello World"
-echo "<p>Hello World!</p>" > /var/www/chefzeek.tech/html/index.html
+echo "Hello World!" > /var/www/chefzeek.tech/html/index.html
 
 
 # create server block
