@@ -4,24 +4,29 @@
 # Quering root with GET request (curl) should return  a string "Hello World"
 
 # install Nginx
+echo 'updating apt-get...'
 apt-get update
-apt-get intsall nginx
+#apt-get intsall nginx
 
 # allow firewall access
-ufw allow 'HTTP'
+#ufw allow 'HTTP'
 
 # Create document root directory
-mkdir -p /var/www/chefzeek.tech/html/
+echo 'Creating root document directory...'
+sudo mkdir -p /var/www/chefzeek.tech/html/
 
 # Give user permissions
-chown -R $USER:$USER /var/www/chefzeek.tech/html/
+echo 'Giving user permissions...'
+sudo chown -R $USER:$USER /var/www/chefzeek.tech/html/
 
 # create site page to include string "Hello World"
-echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
+echo 'Creating root page and shouting Hello World!...'
+sudo echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
 
 
 # create server block
-cat <<EOF >/etc/nginx/sites-available/server_block
+echo 'Creating and configuring server_block...'
+sudo cat <<EOF >/etc/nginx/sites-available/server_block
     server {
         listen 80;
         listen [::]:80;
@@ -38,11 +43,13 @@ cat <<EOF >/etc/nginx/sites-available/server_block
 EOF
 
 # enable server_block by linking with sites-enabled
-ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
+echo 'enabling server block by linking...'
+sudo ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
 
 
 # open nginx configuration file && uncoment HashBucket line 
-sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf 
+#sudo sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf
 
 # confirm nginx files syntax
-nginx -t
+echo 'confirming nginx files...'
+sudo nginx -t
