@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Installs and configures a Nginx
+# Ngninx x should listen on port 80
+# Quering root with GET request (curl) should return  a string "Hello World"
+
+# install Nginx
+apt-get -y update
+apt-get -y intsall nginx
+
+# allow firewall access
+ufw allow 'Nginx HTTP'
+
+# Create document root directory
+mkdir -p /var/www/chefzeek.tech/html/
+
+# Give user permissions
+chown -R $USER:$USER /var/www/chefzeek.tech/html/
+
+# create site page to include string "Hello World"
+echo "Hello World!" > /var/www/chefzeek.tech/html/index.html
+
+
+# create server block
+cat <<EOF >/etc/nginx/sites-available/chefzeek_server
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/chefzeek.tech/html;
+        index index.html;
+
+        server_name _;
+
+        location / {
+            try_files \$uri \$uri/ \=404;
+        }
+    }
+EOF
+
+# remove default from default server block
+sudo sed -i -E "s/(^\s*listen\s*.*)( default_server)/\1/" /etc/nginx/sites-available/default
+
+# enable server_block by linking with sites-enabled
+ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
+
+
+# open nginx configuration file && uncoment HashBucket line 
+sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf 
+
+# confirm nginx files syntax
+nginx -t
+
+# start nginx
+nginx
+# reload nginx config files
+nginx -s reload
