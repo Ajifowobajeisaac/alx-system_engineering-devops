@@ -37,6 +37,9 @@ cat <<EOF >/etc/nginx/sites-available/chefzeek_server
     }
 EOF
 
+# remove default from default server block
+sudo sed -i -E "s/(^\s*listen\s*.*)( default_server)/\1/" /etc/nginx/sites-available/default
+
 # enable server_block by linking with sites-enabled
 ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
 
