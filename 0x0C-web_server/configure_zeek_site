@@ -26,10 +26,10 @@ sudo echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
 
 # create server block
 echo 'Creating and configuring server_block...'
-sudo cat <<EOF >/etc/nginx/sites-available/server_block
+sudo cat <<EOF >/etc/nginx/sites-available/chefzeek_server
     server {
-        listen 80;
-        listen [::]:80;
+        listen 80 default_server;
+        listen [::]:80 default_server;
 
         root /var/www/chefzeek.tech/html;
         index index.html;
@@ -37,14 +37,14 @@ sudo cat <<EOF >/etc/nginx/sites-available/server_block
         server_name chefzeek.tech www.chefzeek.tech;
 
         location / {
-            try_files $uri $uri/ \=404;
+            try_files \$uri \$uri/ \=404;
         }
     }
 EOF
 
 # enable server_block by linking with sites-enabled
 echo 'enabling server block by linking...'
-sudo ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
 
 
 # open nginx configuration file && uncoment HashBucket line 
@@ -53,3 +53,6 @@ sudo ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
 # confirm nginx files syntax
 echo 'confirming nginx files...'
 sudo nginx -t
+
+# reload nginx configuration files
+sudo nginx -s reload

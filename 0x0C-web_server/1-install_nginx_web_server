@@ -21,7 +21,7 @@ echo "Hello World!" > /var/www/chefzeek.tech/html/index.html
 
 
 # create server block
-cat <<EOF >/etc/nginx/sites-available/chefzeel.tech
+cat <<EOF >/etc/nginx/sites-available/chefzeek_server
     server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -32,13 +32,13 @@ cat <<EOF >/etc/nginx/sites-available/chefzeel.tech
         server_name _;
 
         location / {
-            try_files $uri $uri/ \=404;
+            try_files \$uri \$uri/ \=404;
         }
     }
 EOF
 
 # enable server_block by linking with sites-enabled
-ln -s /etc/nginx/sites-available/server_block /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
 
 
 # open nginx configuration file && uncoment HashBucket line 
@@ -47,4 +47,5 @@ sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf
 # confirm nginx files syntax
 nginx -t
 
+# reload nginx config files
 nginx -s reload
