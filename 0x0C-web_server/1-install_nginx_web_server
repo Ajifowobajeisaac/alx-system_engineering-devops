@@ -4,11 +4,11 @@
 # Quering root with GET request (curl) should return  a string "Hello World"
 
 # install Nginx
-apt-get update
-apt-get intsall nginx
+apt-get -y update
+apt-get -y intsall nginx
 
 # allow firewall access
-ufw allow 'HTTP'
+ufw allow 'Nginx HTTP'
 
 # Create document root directory
 mkdir -p /var/www/chefzeek.tech/html/
@@ -47,5 +47,7 @@ sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf
 # confirm nginx files syntax
 nginx -t
 
+# start nginx
+nginx
 # reload nginx config files
 nginx -s reload
