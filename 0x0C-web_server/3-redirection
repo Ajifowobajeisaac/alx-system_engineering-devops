@@ -18,20 +18,23 @@ echo "Hello World!" > /var/www/html/index.html
 
 
 # create server block
-cat <<EOF >/etc/nginx/sites-available/default
-    server {
+echo "
+server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
+
         root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name chefzeek.tech;
+        server_name ajwadg.tech;
 
-		location /redirect_me {
-			return 301 https://www.nginx.com/blog/creating-nginx-rewrite-rules/;
-		}
-    }
-EOF
+        location /redirect_me {
+                return 301 https://www.nginx.com/blog/creating-nginx-rewrite-rules/;
+        }
+}" | tee /etc/nginx/sites-available/default
+
 
 service nginx restart
