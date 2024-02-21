@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# installs nginx and configures it on a remote server
+
+apt-get -y update
+apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+echo 'redirection page' > /var/www/html/redirect_me
+
+cat <<EOF >/etc/nginx/site-available/default
+	server {
+		listen 80 default_server;
+		listen [::]:80 default_server;
+
+		root /var/www/html/;
+		index index.nginx-debain.html;
+
+		server_name _;
+
+		location / {
+			try_files \$uri \$uri/ \=404;
+		}
+		
+		rewrite \^/redirect_me /index.nginx-debain.html permanent;
+	}
+
+service nginx start
