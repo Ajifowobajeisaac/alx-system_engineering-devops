@@ -21,7 +21,7 @@ cat <<EOF >/etc/nginx/sites-available/default
 			try_files \$uri \$uri/ \=404;
 		}
 		
-		rewrite ^/redirect_me$ /index.nginx-debain.html permanent;
+		rewrite \^/redirect_me\$ /index.nginx-debain.html permanent;
 	}
 EOF
 service nginx start
