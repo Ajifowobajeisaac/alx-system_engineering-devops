@@ -18,22 +18,28 @@ echo "Hello World!" > /var/www/html/index.html
 
 
 # create server block
-SERVER_CONFIG=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://sketchfab.com/bluepeno/models permanent;
-	}
-}"
+cat <<EOF >/etc/nginx/sites-available/default
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
 
-bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
+        root /var/www/html;
+        index index.html;
+
+        server_name _;
+
+        location / {
+            try_files \$uri \$uri/ \=404;
+        }
+		if (\$request_filename ~ redirect_me){
+		rewrite ^ https://sketchfab.com/bluepeno/models permanent;
+		}
+    }
+EOF
+
+# enable server_block by linking with sites-enabled
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
 
 service nginx start
 service nginx restart
