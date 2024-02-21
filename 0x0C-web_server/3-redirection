@@ -22,7 +22,7 @@ cat <<EOF >/etc/nginx/sites-available/site.conf
 			try_files \$uri \$uri/ \=404;
 		}
 		
-		rewrite ^/redirect_me\$ /index.nginx-debian.html permanent;
+		rewrite ^/redirect_me$ /index.html permanent;
 	}
 EOF
 rm /etc/nginx/sites-enabled/*
