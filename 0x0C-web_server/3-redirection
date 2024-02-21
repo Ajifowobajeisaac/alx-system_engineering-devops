@@ -1,30 +1,57 @@
 #!/usr/bin/env bash
-# Installs, configures, and starts the server
-apt-get update
-apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
+# Installs and configures a Nginx
+# Ngninx x should listen on port 80
+# Quering root with GET request (curl) should return  a string "Hello World"
+
+# install Nginx
+apt-get update -y
+apt-get install -y nginx
+
+# allow firewall access
+ufw allow 'Nginx HTTP'
+
+# Create document root directory
+rm -rf /var/www/html/
 mkdir -p /var/www/html/
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
-SERVER_CONFIG=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://sketchfab.com/bluepeno/models permanent;
-	}
-}"
 
-bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
+# Give user permissions
+chown -R "$USER":"$USER" /var/www/html/
+chmod -R 755 /var/www/
 
-if [ "$(pgrep -c nginx)" -le 0 ]; then
-	service nginx start
-else
-	service nginx restart
-fi
+# create site page to include string "Hello World"
+echo "Hello World!" > /var/www/html/index.html
+
+
+# create server block
+cat <<EOF >/etc/nginx/sites-available/default
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html;
+
+        server_name _;
+
+        location / {
+            try_files \$uri \$uri/ \=404;
+        }
+
+		location = /redirect_me {
+			return 301 https://google.com
+		}
+    }
+EOF
+
+# enable server_block by linking with sites-enabled
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+
+# confirm nginx files syntax
+nginx -t
+
+# reload nginx config files
+nginx -s reload
+
+service nginx start
+service nginx restart
