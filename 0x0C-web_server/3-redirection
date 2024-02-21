@@ -28,7 +28,7 @@ cat <<EOF >/etc/nginx/sites-available/default
 
         server_name _;
 
-		location = /redirect_me {
+		location /redirect_me {
 			return 301 http://www.google.com;
 		}
     }
