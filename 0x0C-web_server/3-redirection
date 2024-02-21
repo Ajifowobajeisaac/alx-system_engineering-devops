@@ -4,16 +4,17 @@
 apt-get -y update
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'
-echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+rm /var/www/html/*
+echo 'Hello World!' > /var/www/html/index.html
 echo 'redirection page' > /var/www/html/redirect_me
 rm -rf /etc/nginx/sites-available/*
-cat <<EOF >/etc/nginx/sites-available/default
+cat <<EOF >/etc/nginx/sites-available/site.conf
 	server {
 		listen 80 default_server;
 		listen [::]:80 default_server;
 
 		root /var/www/html;
-		index index.nginx-debian.html;
+		index index.html;
 
 		server_name _;
 
@@ -21,9 +22,9 @@ cat <<EOF >/etc/nginx/sites-available/default
 			try_files \$uri \$uri/ \=404;
 		}
 		
-		rewrite \^/redirect_me\i$ /index.nginx-debian.html permanent;
+		rewrite ^/redirect_me\$ /index.nginx-debian.html permanent;
 	}
 EOF
 rm /etc/nginx/sites-enabled/*
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/site.conf /etc/nginx/sites-enabled/
 service nginx start
