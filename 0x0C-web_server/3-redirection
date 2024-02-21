@@ -26,7 +26,7 @@ cat <<EOF >/etc/nginx/sites-available/default
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
-        server_name _;
+        server_name chefzeek.tech;
 
 		location /redirect_me {
 			return 301 http://www.google.com;
