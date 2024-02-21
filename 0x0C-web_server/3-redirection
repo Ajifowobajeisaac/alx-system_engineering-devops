@@ -14,7 +14,7 @@ ufw allow 'Nginx HTTP'
 mkdir -p /var/www/html/
 
 # Give user permissions
-chown -R $USER:$USER /var/www/html/
+chown -R "$USER":"$USER" /var/www/html/
 chmod -R 755 /var/www/
 
 # create site page to include string "Hello World"
