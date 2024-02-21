@@ -5,28 +5,28 @@
 
 # install Nginx
 echo 'updating apt-get...'
-sudo apt-get update
-#apt-get intsall nginx
+apt-get -y update
+apt-get -y intsall nginx
 
 # allow firewall access
-#ufw allow 'HTTP'
+ufw allow 'HTTP'
 
 # Create document root directory
 echo 'Creating root document directory...'
-sudo mkdir -p /var/www/chefzeek.tech/html/
+mkdir -p /var/www/chefzeek.tech/html/
 
 # Give user permissions
 echo 'Giving user permissions...'
-sudo chown -R $USER:$USER /var/www/chefzeek.tech/html/
+chown -R $USER:$USER /var/www/chefzeek.tech/html/
 
 # create site page to include string "Hello World"
 echo 'Creating root page and shouting Hello World!...'
-sudo echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
+echo "<p>Hello World</p>" > /var/www/chefzeek.tech/html/index.html
 
 
 # create server block
 echo 'Creating and configuring server_block...'
-sudo cat <<EOF >/etc/nginx/sites-available/chefzeek_server
+ cat <<EOF >/etc/nginx/sites-available/chefzeek_server
     server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -37,18 +37,27 @@ sudo cat <<EOF >/etc/nginx/sites-available/chefzeek_server
         server_name chefzeek.tech www.chefzeek.tech;
 
         location / {
-            try_files \$uri \$uri/ \=404;
+            try_files \$uri \$uri/ \=xyz;
+            }
+        location ~ ^/redirect_me/? {
+            return 301 /index.html;
+        }
+        location /xyz {
+            return 404 "Ceci n'est pas une page";
         }
     }
 EOF
 
 # enable server_block by linking with sites-enabled
 echo 'enabling server block by linking...'
-sudo ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/chefzeek_server /etc/nginx/sites-enabled/
 
 
 # open nginx configuration file && uncoment HashBucket line 
 #sudo sed -i -E 's/\s*\#\s*(server_names_hash.*$)/\1/' /etc/nginx/nginx.conf
+
+# restarting nginx
+service nginx restart
 
 # confirm nginx files syntax
 echo 'confirming nginx files...'
