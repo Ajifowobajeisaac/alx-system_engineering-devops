@@ -4,8 +4,8 @@
 # Quering root with GET request (curl) should return  a string "Hello World"
 
 # install Nginx
-apt-get update -y
-apt-get install -y nginx
+apt-get -y update
+apt-get -y install nginx
 
 # allow firewall access
 ufw allow 'Nginx HTTP'
@@ -24,29 +24,13 @@ cat <<EOF >/etc/nginx/sites-available/default
         listen [::]:80 default_server;
 
         root /var/www/html;
-        index index.html;
+        index index.html index.htm index.nginx-debian.html;
 
-        server_name _;
+        server_name chefzeek.tech;
 
-        location / {
-            try_files \$uri \$uri/ \=404;
+        location /redirect_me {
+            return 301 https://www.google.com;
         }
-
-		location /redirect_me {
-			return 301 https://google.com
-		}
     }
 EOF
-
-# enable server_block by linking with sites-enabled
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-
-service nginx start
 service nginx restart
-# confirm nginx files syntax
-nginx -t
-
-# reload nginx config files
-nginx -s reload
-
