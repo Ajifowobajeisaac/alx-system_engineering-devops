@@ -4,8 +4,8 @@
 # Quering root with GET request (curl) should return  a string "Hello World"
 
 # install Nginx
-apt-get update -y
-apt-get install -y nginx
+apt-get -y update
+apt-get -y install nginx
 
 # allow firewall access
 ufw allow 'Nginx HTTP'
@@ -34,15 +34,4 @@ cat <<EOF >/etc/nginx/sites-available/default
     }
 EOF
 
-# enable server_block by linking with sites-enabled
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-
-service nginx start
 service nginx restart
-# confirm nginx files syntax
-nginx -t
-
-# reload nginx config files
-nginx -s reload
-
