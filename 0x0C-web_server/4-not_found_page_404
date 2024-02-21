@@ -26,6 +26,10 @@ cat <<EOF >/etc/nginx/sites-available/default
         index index.html index.htm index.nginx-debian.html;
 
         server_name chefzeek.tech;
+		
+		location / {
+			try_files \$uri \$uri/ /xyz;
+		} 
 
         location /xyz {
            return 404 "Ceci n'est pas une page";
