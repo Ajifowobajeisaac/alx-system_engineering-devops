@@ -23,5 +23,5 @@ cat <<EOF >/etc/nginx/site-available/default
 		
 		rewrite \^/redirect_me /index.nginx-debain.html permanent;
 	}
-
+EOF
 service nginx start
