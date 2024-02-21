@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # installs nginx and configures it on a remote server
 
 apt-get -y update
@@ -19,7 +20,7 @@ cat <<EOF >/etc/nginx/sites-available/default
             try_files \$uri \$uri/ \=404;
         }
         
-		location = /redirect_me {
+		location \= /redirect_me {
 			return 301 /index.nginx-debian.html
 		}
     }
