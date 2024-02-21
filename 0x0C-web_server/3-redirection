@@ -25,4 +25,4 @@ cat <<EOF >/etc/nginx/sites-available/default
     }
 EOF
 service nginx start
-nginx -s reload
+service nginx restart
