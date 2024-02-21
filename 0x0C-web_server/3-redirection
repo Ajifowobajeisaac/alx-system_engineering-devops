@@ -12,7 +12,7 @@ cat <<EOF >/etc/nginx/sites-available/default
 		listen 80 default_server;
 		listen [::]:80 default_server;
 
-		root /var/www/html/;
+		root /var/www/html;
 		index index.nginx-debain.html;
 
 		server_name _;
