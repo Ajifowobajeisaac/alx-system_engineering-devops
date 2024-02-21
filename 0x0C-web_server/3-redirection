@@ -20,7 +20,7 @@ cat <<EOF >/etc/nginx/sites-available/default
         }
         
 		location \= /redirect_me {
-			return 301 /index.nginx-debian.html
+			return 301 /index.nginx-debian.html;
 		}
     }
 EOF
