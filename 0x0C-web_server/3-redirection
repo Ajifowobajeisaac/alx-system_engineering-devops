@@ -1,28 +1,56 @@
 #!/usr/bin/env bash
-# installs nginx and configures it on a remote server
+# Installs and configures a Nginx
+# Ngninx x should listen on port 80
+# Quering root with GET request (curl) should return  a string "Hello World"
 
+# install Nginx
 apt-get -y update
-apt-get -y install nginx
+apt-get -y intsall nginx
+
+# allow firewall access
 ufw allow 'Nginx HTTP'
-echo 'Hello World!' > /var/www/html/index.nginx-debian.html
+
+# Create document root directory
+mkdir -p /var/www/html/
+
+# Give user permissions
+chown -R $USER:$USER /var/www/html/
+chmod -R 755 /var/www/
+
+# create site page to include string "Hello World"
+echo "Hello World!" > /var/www/html/index.html
+
+
+# create server block
 cat <<EOF >/etc/nginx/sites-available/default
     server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
         root /var/www/html;
-        index index.nginx-debian.html;
+        index index.html;
 
         server_name _;
 
         location / {
             try_files \$uri \$uri/ \=404;
         }
-        
+
 		location \= /redirect_me {
-			return 301 /index.nginx-debian.html;
+			return 301 https://google.com
 		}
     }
 EOF
+
+# enable server_block by linking with sites-enabled
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+
+# confirm nginx files syntax
+nginx -t
+
+# reload nginx config files
+nginx -s reload
+
 service nginx start
 service nginx restart
