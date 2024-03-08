@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # installs nginx and configures it on a remote server
 # adds custom header to identify responding servers
+# shellcheck disable=SC2154
 
 apt-get -y update
 apt-get -y install nginx
@@ -18,7 +19,7 @@ cat <<EOF >/etc/nginx/sites-available/default
         index index.html index.htm index.nginx-debian.html;
 
         server_name chefzeek.tech;
-		add_header X-Served-By "$hostname"; # shellcheck disable=SC2059
+		add_header X-Served-By "$hostname";
 
         location /redirect_me {
             return 301 https://www.google.com;
