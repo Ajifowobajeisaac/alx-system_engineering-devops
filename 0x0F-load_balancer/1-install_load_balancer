@@ -24,6 +24,7 @@ frontend web
 backend webservers
         balance roundrobin
         server 37125-web-01 34.224.83.117:80 check
-        server 37125-web-02 54.197.90.139:80 checkEOF
+        server 37125-web-02 54.197.90.139:80 check
+EOF
 
-service haproxy start
+sudo service haproxy start
