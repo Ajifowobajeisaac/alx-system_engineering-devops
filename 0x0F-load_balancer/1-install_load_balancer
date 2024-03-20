@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 # install and configure haproxy
 
-apt-get install -y software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-1.8
 apt-get -y update
-apt-get install -y haproxy=1.8.\*
+apt-get -y install haproxy=2.0\*
 
-cat << EOF > /etc/haproxy/haproxy.cfg
+
+cat << EOF > /etc/haproxy/haproxy.cfg 
 global
         log /dev/log local0
-    
+
 defaults
         log global
         mode http
@@ -29,5 +28,5 @@ backend webservers
         server 37125-web-02 54.197.90.139:80 check
 EOF
 
-haproxy -c -f /etc/haproxy/haproxy.cfg
-ervice haproxy start
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo service haproxy start
