@@ -4,6 +4,7 @@
 apt-get -y update
 apt-get -y install haproxy=2.0\*
 
+
 cat << EOF > /etc/haproxy/haproxy.cfg
 global
         log /dev/log local0
@@ -27,4 +28,5 @@ backend webservers
         server 37125-web-02 54.197.90.139:80 check
 EOF
 
-sudo service haproxy start
+haproxy -c -f /etc/haproxy/haproxy.cfg
+service haproxy start
