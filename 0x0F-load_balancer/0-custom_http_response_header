@@ -10,7 +10,7 @@ echo 'Hello World!' > /var/www/html/index.nginx-debian.html
 service nginx start
 
 cat <<EOF >/etc/nginx/sites-available/default
-    server {
+server {
         listen 80 default_server;
         listen [::]:80 default_server;
 
@@ -18,20 +18,17 @@ cat <<EOF >/etc/nginx/sites-available/default
         index index.html index.htm index.nginx-debian.html;
 
         server_name chefzeek.tech;
-
-        # shellcheck disable=SC2154
-		add_header X-Served-By \$hostname;
+        add_header X-Served-By \$hostname;
 
         location /redirect_me {
             return 301 https://www.google.com;
         }
         location / {
-			try_files \$uri \$uri/ /xyz;
-		}
+            try_files \$uri \$uri/ /xyz;
+                } 
 
         location /xyz {
-           return 404 "Ceci n'est pas une page";
+            return 404 "Ceci n'est pas une page";
         }
     }
-
 EOF
