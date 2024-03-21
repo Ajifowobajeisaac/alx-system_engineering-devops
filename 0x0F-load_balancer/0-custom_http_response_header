@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2154
 # installs nginx and configures it on a remote server
 # adds custom header to identify responding servers
-# shellcheck disable=SC2154
 
 apt-get -y update
 apt-get -y install nginx
