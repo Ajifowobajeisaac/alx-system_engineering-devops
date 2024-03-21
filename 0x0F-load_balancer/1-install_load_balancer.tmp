@@ -2,22 +2,13 @@
 # install and configure haproxy
 
 apt-get -y update
-apt-get -y install haproxy=2.0\*
+apt-get -y install --no-install-recommends software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-2.0
+apt-get -y install haproxy=2.0.\*
 
+echo "ENABLED" >> /etc/default/haproxy
 
 cat << EOF > /etc/haproxy/haproxy.cfg 
-global
-        log /dev/log local0
-
-defaults
-        log global
-        mode http
-        option httplog
-        option dontlognull
-        timeout connect 5000
-        timeout client 50000
-        timeout server 50000
-
 frontend web
         bind *:80
         default_backend webservers
@@ -28,5 +19,6 @@ backend webservers
         server 37125-web-02 54.197.90.139:80 check
 EOF
 
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-sudo service haproxy start
+haproxy -c -f /etc/haproxy/haproxy.cfg
+service haproxy start
+service haproxy restart
