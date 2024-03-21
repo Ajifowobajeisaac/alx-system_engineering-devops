@@ -28,6 +28,6 @@ backend webservers
         server 37125-web-02 54.197.90.139:80 check
 EOF
 
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
-sudo service haproxy start
-sudo service haproxy restart
+haproxy -c -f /etc/haproxy/haproxy.cfg
+service haproxy start
+service haproxy restart
