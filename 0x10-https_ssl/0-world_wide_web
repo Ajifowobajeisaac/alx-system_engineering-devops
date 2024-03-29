@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Ignore shellcheck SC2086 to allow flexible spacing in the script
+# shellcheck disable=SC2086
+
+# Function to retrieve and process DNS information
+get_dns_info() {
+  local subdomain=$1
+  local domain=$2
+
+  # Use dig to get DNS records for subdomain
+  dns_record=$(dig $subdomain.$domain +short)
+
+  # Check if dig command ran successfully
+  if [[ $? -eq 0 && ! -z $dns_record ]]; then
+    record_type=$(echo $dns_record | awk '{print $1}')
+    destination=$(echo $dns_record | awk '{print $2}')
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"  
+  else
+    echo "Error: Could not retrieve DNS information for $subdomain.$domain"
+  fi
+}
+
+# Argument Validation
+if [[ $# -lt 1 ]]; then
+    echo "Error: Domain name is required. Usage: $0 domain [subdomain]"
+    exit 1
+fi
+
+domain=$1
+
+# If a subdomain is provided, check that domain was also supplied
+if [[ $# -eq 2 ]]; then
+  subdomain=$2
+  get_dns_info $subdomain $domain
+else # Process the mandatory subdomains
+  for subdomain in www lb-01 web-01 web-02; do
+    get_dns_info $subdomain $domain
+  done
+fi
+
