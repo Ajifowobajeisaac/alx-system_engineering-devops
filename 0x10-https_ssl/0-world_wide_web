@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Ignore shellcheck SC2086 to allow flexible spacing in the script
 # shellcheck disable=SC2086
 
