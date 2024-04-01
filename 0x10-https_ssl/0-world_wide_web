@@ -15,7 +15,7 @@ get_dns_info() {
     record_type=$(echo $dns_record | awk '{print $7}')
     destination=$(echo $dns_record | awk '{print $8}')
     echo "The subdomain $subdomain is a $record_type record and points\
-    to $destination"
+  to $destination"
   else
     echo "Error: Could not retrieve DNS information for $subdomain.$domain"
   fi
