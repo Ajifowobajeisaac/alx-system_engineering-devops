@@ -1,0 +1,27 @@
+global
+        log /dev/log local0
+
+defaults
+        log global
+        mode http
+        option forwardfor
+        option http-server-close
+        option httplog
+        option dontlognull
+        timeout connect 5000
+        timeout client 50000
+        timeout server 50000
+
+frontend web
+        bind 54.237.89.228:80
+        default_backend webservers
+        redirect scheme https code 301 if !{ ssl_fc }
+
+frontend web-https
+        bind 54.237.89.228:443 ssl crt /etc/ssl/private/sslkey.pem
+        default_backend webservers 
+
+backend webservers
+        balance roundrobin
+        server 37125-web-01 34.224.83.117:80 check
+        server 37125-web-02 54.197.90.139:80 check
